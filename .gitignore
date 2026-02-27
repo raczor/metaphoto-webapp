@@ -6,7 +6,9 @@ frontend/build/
 
 .env
 .env.local
+**/.env.local
 .vercel/
+**/vercel/
 
 .idea
 .DS_Store
