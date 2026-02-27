@@ -35,6 +35,9 @@ jobs:
         working-directory: frontend
         run: npm ci
 
+      - name: Debug env
+        run: echo "API URL is set ${{ secrets.REACT_APP_API_URL != '' }}"
+
       - name: Build frontend
         working-directory: frontend
         run: npm run build
