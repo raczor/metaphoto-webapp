@@ -110,8 +110,6 @@ On every push to `main`, the workflow in `.github/workflows/deploy.yml`:
 2. Builds the React app
 3. Deploys to Vercel (production)
 
-Pull requests get a preview deployment automatically.
-
 #### Required GitHub Secrets
 
 | Secret | Where to get it                                                   |
@@ -120,3 +118,9 @@ Pull requests get a preview deployment automatically.
 | `VERCEL_ORG_ID` | Vercel Org Id (Both projects should be configued in the same org) |
 | `VERCEL_PROJECT_ID_BACKEND` | Vercel Backend project Id                                         |
 | `VERCEL_PROJECT_ID_FRONTEND` | Vercel Frontend project Id                                        |
+
+---
+
+## Development Notes
+This project was developed independently with AI assistance (Claude by Anthropic) used as a learning aid during development.
+AI was consulted for the initial project scaffolding.
