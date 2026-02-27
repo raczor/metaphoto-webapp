@@ -16,6 +16,7 @@
   },
   "proxy": "http://localhost:3001",
   "devDependencies": {
+    "@types/react-dom": "^19.2.3",
     "@types/react-paginate": "^7.1.4"
   }
 }
