@@ -7,8 +7,6 @@ import { Filters, EnrichedPhoto, PhotosResponse } from './types/photo.types';
 
 const baseUrl = process.env.REACT_APP_API_URL || '';
 
-console.log('API BASE:', process.env.REACT_APP_API_URL);
-
 export default function App() {
   const [photos, setPhotos] = useState<EnrichedPhoto[]>([]);
   const [total, setTotal] = useState<number>(0);

@@ -6,8 +6,8 @@ on:
       - main
 
 jobs:
-  deploy:
-    name: Deploy
+  build:
+    name: Build & Verify
     runs-on: ubuntu-latest
 
     steps:
@@ -35,14 +35,27 @@ jobs:
         working-directory: frontend
         run: npm ci
 
-      - name: Debug env
-        run: echo "API URL is set ${{ secrets.REACT_APP_API_URL != '' }}"
-
       - name: Build frontend
         working-directory: frontend
         run: npm run build
-        env:
-          REACT_APP_API_URL: ${{ secrets.REACT_APP_API_URL }}
+
+  deploy:
+    name: Deploy
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: |
+            backend/package-lock.json
+            frontend/package-lock.json
 
       - name: Deploy backend to Vercel
         uses: amondnet/vercel-action@v25

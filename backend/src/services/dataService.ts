@@ -2,13 +2,7 @@ import axios from 'axios';
 import { User, Album, Photo, EnrichedPhoto } from '../types';
 import { API_ENDPOINTS } from '../configs/api.constants';
 import cacheService from "./cache";
-
-const CACHE_KEYS = {
-  users: 'users',
-  albums: 'albums',
-  photos: 'photos',
-  enrichedPhotos: 'enriched_photos',
-} as const;
+import {CACHE_KEYS} from "./cache/cache.constants";
 
 async function fetchWithCache<T>(key: string, url: string): Promise<T> {
   const cached = await cacheService.get<T>(key);
@@ -31,10 +25,6 @@ async function getAllAlbums() {
 
 async function getAllPhotos() {
   return fetchWithCache<Photo[]>(CACHE_KEYS.photos, API_ENDPOINTS.photos);
-}
-
-async function getPhoto(id: number) {
-  return fetchWithCache(`photo_${id}`, API_ENDPOINTS.photo(id));
 }
 
 export async function buildEnrichedPhotos(forceRefresh: boolean = false): Promise<EnrichedPhoto[]> {
