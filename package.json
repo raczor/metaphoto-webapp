@@ -1,0 +1,20 @@
+{
+  "name": "metaphoto-webapp",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "install:all": "npm i && npm i --prefix backend && npm i --prefix frontend",
+    "dev": "concurrently \"npm run dev:backend\" \"npm run dev:frontend\"",
+    "dev:backend": "npm run dev --prefix backend",
+    "dev:frontend": "npm --prefix frontend start",
+    "build": "npm run build --prefix frontend"
+  },
+  "devDependencies": {
+    "@types/node": "^25.3.2",
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
+    "concurrently": "^8.2.0",
+    "in": "^0.19.0",
+    "metaphoto-webapp": "file:frontend"
+  }
+}

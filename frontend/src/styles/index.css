@@ -1,0 +1,15 @@
+.photo-card {
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  height: 100%;
+}
+
+.photo-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 16px rgba(0,0,0,0.12) !important;
+}
+
+.photo-card img {
+  height: 160px;
+  object-fit: cover;
+}
