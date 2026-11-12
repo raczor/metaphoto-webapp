@@ -10,28 +10,24 @@ export default function PaginationBar({ currentPage, totalPages, onPageChange }:
   if (totalPages <= 1) return null;
 
   return (
-      <div className="d-flex justify-content-center mt-4">
-        <ReactPaginate
-            pageCount={totalPages}
-            forcePage={currentPage - 1}
-            onPageChange={({ selected }) => onPageChange(selected + 1)}
-            marginPagesDisplayed={2}
-            pageRangeDisplayed={4}
-            previousLabel="‹ Prev"
-            nextLabel="Next ›"
-            breakLabel="..."
-            containerClassName="pagination pagination-sm mb-0"
-            pageClassName="page-item"
-            pageLinkClassName="page-link"
-            previousClassName="page-item"
-            previousLinkClassName="page-link"
-            nextClassName="page-item"
-            nextLinkClassName="page-link"
-            breakClassName="page-item"
-            breakLinkClassName="page-link"
-            activeClassName="active"
-            disabledClassName="disabled"
-        />
-      </div>
+    <nav className="pager" aria-label="Pages">
+      <ReactPaginate
+        pageCount={totalPages}
+        forcePage={currentPage - 1}
+        onPageChange={({ selected }) => onPageChange(selected + 1)}
+        marginPagesDisplayed={1}
+        pageRangeDisplayed={3}
+        previousLabel="Previous"
+        nextLabel="Next"
+        breakLabel="…"
+        containerClassName="pager__list"
+        pageLinkClassName="pager__link"
+        previousLinkClassName="pager__link pager__link--step"
+        nextLinkClassName="pager__link pager__link--step"
+        breakLinkClassName="pager__link pager__link--break"
+        activeLinkClassName="pager__link--active"
+        disabledLinkClassName="pager__link--disabled"
+      />
+    </nav>
   );
 }

@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { Card, Form, Button, Row, Col } from 'react-bootstrap';
 import { Filters } from '../types/photo.types';
 
 interface FilterBarProps {
@@ -7,85 +6,79 @@ interface FilterBarProps {
   onFilterChange: (filters: Filters) => void;
 }
 
+const EMPTY: Filters = { title: '', albumTitle: '', albumUserEmail: '' };
+
 export default function FilterBar({ filters, onFilterChange }: FilterBarProps) {
-  const [local, setLocal] = useState<Filters>(filters);
+  const extraCount = (filters.albumTitle ? 1 : 0) + (filters.albumUserEmail ? 1 : 0);
+  const [showMore, setShowMore] = useState<boolean>(false);
+  const hasFilters = Boolean(filters.title || extraCount);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setLocal({ ...local, [e.target.name]: e.target.value });
+    onFilterChange({ ...filters, [e.target.name]: e.target.value });
   };
-
-  const handleSubmit = (e: React.SubmitEvent) => {
-    e.preventDefault();
-    onFilterChange(local);
-  };
-
-  const handleClear = () => {
-    const empty: Filters = { title: '', albumTitle: '', albumUserEmail: '' };
-    setLocal(empty);
-    onFilterChange(empty);
-  };
-
-  const hasFilters = local.title || local.albumTitle || local.albumUserEmail;
 
   return (
-      <Card className="shadow-sm mb-3">
-        <Card.Body>
-          <Card.Title className="fs-6 fw-semibold mb-3">Filters</Card.Title>
-          <Form onSubmit={handleSubmit}>
-            <Row className="g-3">
+    <form className="search" role="search" onSubmit={(e) => e.preventDefault()}>
+      <div className="search__row">
+        <div className="search__field search__field--main">
+          <svg className="search__icon" viewBox="0 0 20 20" aria-hidden="true">
+            <circle cx="9" cy="9" r="6" fill="none" stroke="currentColor" strokeWidth="1.8" />
+            <path d="M13.5 13.5 18 18" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+          </svg>
+          <input
+            type="search"
+            name="title"
+            placeholder="Search photos by title"
+            aria-label="Search photos by title"
+            autoComplete="off"
+            value={filters.title}
+            onChange={handleChange}
+          />
+        </div>
 
-              <Col md={4}>
-                <Form.Group>
-                  <Form.Control
-                      size="sm"
-                      type="text"
-                      name="title"
-                      placeholder="Photo Title"
-                      value={local.title}
-                      onChange={handleChange}
-                  />
-                </Form.Group>
-              </Col>
+        <button
+          type="button"
+          className="chip"
+          aria-expanded={showMore}
+          aria-controls="more-filters"
+          onClick={() => setShowMore((v) => !v)}
+        >
+          Filters{extraCount > 0 && <span className="chip__badge">{extraCount}</span>}
+        </button>
 
-              <Col md={4}>
-                <Form.Group>
-                  <Form.Control
-                      size="sm"
-                      type="text"
-                      name="albumTitle"
-                      placeholder="Album Title"
-                      value={local.albumTitle}
-                      onChange={handleChange}
-                  />
-                </Form.Group>
-              </Col>
+        {hasFilters && (
+          <button type="button" className="chip chip--ghost" onClick={() => onFilterChange(EMPTY)}>
+            Clear
+          </button>
+        )}
+      </div>
 
-              <Col md={4}>
-                <Form.Group>
-                  <Form.Control
-                      size="sm"
-                      type="text"
-                      name="albumUserEmail"
-                      placeholder="User Email"
-                      value={local.albumUserEmail}
-                      onChange={handleChange}
-                  />
-                </Form.Group>
-              </Col>
-            </Row>
-
-            <div className="mt-3 d-flex gap-2">
-              <Button variant="dark" size="sm" type="submit">
-                Search
-              </Button>
-              {hasFilters && (
-                  <Button variant="outline-secondary" size="sm" onClick={handleClear}>
-                    Clear
-                  </Button>
-              )}
-            </div>
-          </Form>
-        </Card.Body>
-      </Card>
+      {showMore && (
+        <div className="search__more" id="more-filters">
+          <div className="search__field">
+            <input
+              type="text"
+              name="albumTitle"
+              placeholder="Album title"
+              aria-label="Album title"
+              autoComplete="off"
+              value={filters.albumTitle}
+              onChange={handleChange}
+            />
+          </div>
+          <div className="search__field">
+            <input
+              type="text"
+              name="albumUserEmail"
+              placeholder="Owner email"
+              aria-label="Owner email"
+              autoComplete="off"
+              value={filters.albumUserEmail}
+              onChange={handleChange}
+            />
+          </div>
+        </div>
+      )}
+    </form>
   );
 }
