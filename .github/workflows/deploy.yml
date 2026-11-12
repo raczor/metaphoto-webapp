@@ -67,6 +67,7 @@ jobs:
           vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
           vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID_BACKEND }}
           vercel-args: '--prod'
+          vercel-version: latest
           working-directory: ./backend
 
       - name: Deploy frontend to Vercel
@@ -76,4 +77,5 @@ jobs:
           vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
           vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID_FRONTEND }}
           vercel-args: '--prod'
+          vercel-version: latest
           working-directory: ./frontend
